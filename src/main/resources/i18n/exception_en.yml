@@ -1,0 +1,6 @@
+unKnown:
+  code: "-9999"
+  msg: "An unknow error has occured."
+userNotFound:
+  code: "-1000"
+  msg: "Not exist user"

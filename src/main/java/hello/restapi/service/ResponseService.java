@@ -39,6 +39,14 @@ public class ResponseService {
         return result;
     }
 
+    public CommonResult getFailResult(int code, String msg) {
+        CommonResult result = new CommonResult();
+        result.setSuccess(false);
+        result.setCode(code);
+        result.setMsg(msg);
+        return result;
+    }
+
     private void setSuccessResult(CommonResult result) {
         result.setSuccess(true);
         result.setCode(CommonResponse.SUCCESS.getCode());

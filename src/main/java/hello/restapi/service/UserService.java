@@ -1,5 +1,6 @@
 package hello.restapi.service;
 
+import hello.restapi.advice.exception.CUserNotFoundException;
 import hello.restapi.controller.dto.UserDto;
 import hello.restapi.entity.User;
 import hello.restapi.repository.UserRepository;
@@ -21,7 +22,7 @@ public class UserService {
     }
 
     public User findUser(String userId) {
-        return userRepository.findByUserId(userId).orElseThrow(RuntimeException::new);
+        return userRepository.findByUserId(userId).orElseThrow(CUserNotFoundException::new);
     }
 
     public User saveUser(UserDto userDto) {
@@ -29,7 +30,7 @@ public class UserService {
     }
 
     public User modifyUser(UserDto userDto) {
-        Long id = userRepository.findByUserId(userDto.getUserId()).orElseThrow(NoSuchElementException::new).getId();
+        Long id = userRepository.findByUserId(userDto.getUserId()).orElseThrow(CUserNotFoundException::new).getId();
         User user = User.builder()
                 .id(id)
                 .userId(userDto.getUserId())
