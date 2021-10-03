@@ -1,5 +1,6 @@
 package hello.restapi.advice;
 
+import hello.restapi.advice.exception.CSignInFailedException;
 import hello.restapi.advice.exception.CUserNotFoundException;
 import hello.restapi.model.response.CommonResult;
 import hello.restapi.service.ResponseService;
@@ -23,13 +24,19 @@ public class ExceptionAdviceClass {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     protected CommonResult defaultException(HttpServletRequest request, Exception e) {
-        return responseService.getFailResult(Integer.parseInt(getMessage("unknown.code")), getMessage("unknown.msg"));
+        return responseService.getFailResult(Integer.parseInt(getMessage("unKnown.code")), getMessage("unKnown.msg"));
     }
 
     @ExceptionHandler(CUserNotFoundException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    protected CommonResult userNotFoundException() {
+    protected CommonResult userNotFoundException(HttpServletRequest request, CUserNotFoundException e) {
         return responseService.getFailResult(Integer.parseInt(getMessage("userNotFound.code")), getMessage("userNotFound.msg"));
+    }
+
+    @ExceptionHandler(CSignInFailedException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    protected CommonResult emailSignInFailed(HttpServletRequest request, CSignInFailedException e) {
+        return responseService.getFailResult(Integer.parseInt(getMessage("emailSignInFailed.code")), getMessage("emailSignInFailed.msg"));
     }
 
     private String getMessage(String code) {

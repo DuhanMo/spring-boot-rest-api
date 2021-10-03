@@ -1,21 +1,24 @@
 package hello.restapi.service;
 
+import hello.restapi.advice.exception.CSignInFailedException;
 import hello.restapi.advice.exception.CUserNotFoundException;
 import hello.restapi.controller.dto.UserDto;
 import hello.restapi.entity.User;
 import hello.restapi.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Collections;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @RequiredArgsConstructor
 @Service
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public List<User> findAllUser() {
         return userRepository.findAll();
@@ -42,5 +45,23 @@ public class UserService {
     @Transactional
     public void deleteUser(String userId) {
         userRepository.deleteByUserId(userId);
+    }
+
+    public User signIn(UserDto userDto) {
+        User user = userRepository.findByUserId(userDto.getUserId()).orElseThrow(CSignInFailedException::new);
+        if (!passwordEncoder.matches(userDto.getUserPassword(), user.getUserPassword())) {
+            throw new CSignInFailedException();
+        }
+        return user;
+    }
+
+    public void signUp(UserDto userDto) {
+        User user = User.builder()
+                .userId(userDto.getUserId())
+                .userPassword(passwordEncoder.encode(userDto.getUserPassword()))
+                .userName(userDto.getUserName())
+                .roles(Collections.singletonList("ROLE_USER"))
+                .build();
+        userRepository.save(user);
     }
 }

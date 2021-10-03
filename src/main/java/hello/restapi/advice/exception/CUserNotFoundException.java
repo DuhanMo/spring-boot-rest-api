@@ -11,5 +11,6 @@ public class CUserNotFoundException extends RuntimeException {
     }
 
     public CUserNotFoundException() {
+        super();
     }
 }

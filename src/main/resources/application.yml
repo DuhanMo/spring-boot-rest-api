@@ -5,8 +5,10 @@ spring:
     username: sa
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
-    properties.hibernate.hbm2ddl.auto: update
+    properties.hibernate.hbm2ddl.auto: create
     showSql: true
   messages:
     basename: i18n/exception
     encoding: UTF-8
+  jwt:
+    secret: duhanJwt!@#
