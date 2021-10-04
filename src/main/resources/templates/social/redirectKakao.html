@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+access_token : <span th:text="${authInfo.access_token}"></span><br>
+token_type : <span th:text="${authInfo.token_type}"></span><br>
+refresh_token : <span th:text="${authInfo.refresh_token}"></span><br>
+expires_in : <span th:text="${authInfo.expires_in}"></span><br>
+scope : <span th:text="${authInfo.scope}"></span><br>
+</body>
+</html>

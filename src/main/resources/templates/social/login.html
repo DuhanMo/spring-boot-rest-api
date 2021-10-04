@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<th:block><p th:text="${loginUrl}"></p></th:block>
+<button th:href="${loginUrl}">KakaoLogin</button>
+<script th:inline="javascript">
+    // function popupKakaoLogin() {
+    //     let loginUrl = '[[${loginUrl}]]';
+    //   window.open(loginUrl, 'popupKakaoLogin', 'width=700,height=500,scrollbars=0,toolbar=0,menubar=no')
+    // }
+</script>
+</body>
+</html>
